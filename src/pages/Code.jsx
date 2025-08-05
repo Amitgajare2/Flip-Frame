@@ -5,19 +5,45 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
   const [code, setCode] = useState('');
+  const [generatedURL, setGeneratedURL] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
+    const trimmed = code.trim();
+
+    // Check for valid HTML, CSS, or JS content
+    const isHTML = /<\s*html[\s>]/i.test(trimmed);
+    const isStyle = /<\s*style[\s>]/i.test(trimmed);
+    const isScript = /<\s*script[\s>]/i.test(trimmed);
+    const isTag = /<[^>]+>/g.test(trimmed);
+
+    if (!(isHTML || isStyle || isScript || isTag)) {
+      alert("Only valid HTML, CSS, or JavaScript code is allowed.");
+      return;
+    }
+
+    if (trimmed.length < 20) {
+      alert("The code is too short or not meaningful enough.");
+      return;
+    }
+
     const docId = nanoid(10);
     try {
       await databases.createDocument(DB_ID, COLLECTION_ID, docId, {
-        code,
+        code: trimmed,
       });
-      navigate(`/${docId}`);
+      const url = `${window.location.origin}/${docId}`;
+      setGeneratedURL(url);
+      // navigate(`/${docId}`); ← Optional: auto redirect
     } catch (error) {
       alert("Failed to create snippet. Check Appwrite config.");
       console.error(error);
     }
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(generatedURL);
+    alert('Link copied to clipboard!');
   };
 
   return (
@@ -35,7 +61,7 @@ export default function Home() {
           className="w-full h-80 rounded-md bg-gray-900 text-white p-4 border border-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder="<html>\n  <body>\n    Hello World\n  </body>\n</html>"
+          placeholder={`<html>\n  <head>\n    <style>body { color: red }</style>\n  </head>\n  <body>\n    Hello World\n  </body>\n</html>`}
         />
 
         <div className="text-center">
@@ -46,6 +72,19 @@ export default function Home() {
             🔗 Generate Shareable Link
           </button>
         </div>
+
+        {/* Generated URL Display */}
+        {generatedURL && (
+          <div className="mt-8 bg-gray-800 border border-gray-700 p-4 rounded-md flex flex-col md:flex-row items-center justify-between gap-3">
+            <p className="text-sm break-all">{generatedURL}</p>
+            <button
+              onClick={copyToClipboard}
+              className="mt-2 md:mt-0 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-semibold"
+            >
+              📋 Copy Link
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
