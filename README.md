@@ -117,8 +117,8 @@ using (true);
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/html-hosting-app
-cd html-hosting-app
+git clone https://github.com/Amitgajare2/Flip-Frame
+cd Flip-Frame
 ```
 
 ### 2. Install Dependencies
