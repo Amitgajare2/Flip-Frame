@@ -199,11 +199,7 @@ npm install @supabase/supabase-js react-router-dom uuid
 * Supabase RLS protects user data
 * Add CSS, JS support or themes later
 
----
 
-## 🧑‍💻 Author
-
-Made by you ❤️
 
 
 
