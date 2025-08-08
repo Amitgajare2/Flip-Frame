@@ -1,0 +1,25 @@
+:root {
+  --bg-color-light: #ffffff;
+  --bg-color-dark: #1a1a1a;
+  --text-color-light: #000000;
+  --text-color-dark: #ffffff;
+  --accent-color: #FF7167;
+  --accent-color-hover: #DD594D;
+  --tech-badge-bg: #f3f4f6;
+  --tech-badge-text: #4b5563;
+  --font-headline: "Michroma", sans-serif;
+  --font-noraml: "TikTok Sans", sans-serif;
+  --font-title: "Seymour One", sans-serif;
+  --font-handwritter: "Shadows Into Light", cursive;
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a{
+  text-decoration: none;
+}

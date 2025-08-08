@@ -1,0 +1,120 @@
+.login-bg {
+  min-height: 100vh;
+  width: 100vw;
+  background: var(--bg-color-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, #fde2df6f 1px, transparent 1px),
+    linear-gradient(to bottom, #fde2df6f 1px, transparent 1px);
+  background-size: 25px 24px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, #000 70%, transparent 110%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, #000 70%, transparent 110%);
+  pointer-events: none;
+  z-index: 0;
+  animation: moveGrid 6s linear infinite;
+}
+
+@keyframes moveGrid {
+  0% { background-position: 0 0; }
+  100% { background-position: 25px 24px; }
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.08);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 370px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.login-title {
+  font-family: var(--font-headline);
+  color: var(--accent-color);
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.login-input {
+  width: 95%;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1.5px solid #ececec;
+  background: #f8f8f8;
+  font-size: 1rem;
+  font-family: var(--font-noraml);
+  color: var(--text-color-light);
+  outline: none;
+  margin-bottom: 0.2rem;
+  transition: border 0.2s;
+}
+.login-input:focus {
+  border: 1.5px solid var(--accent-color);
+  background: #fff;
+}
+
+.login-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.login-error {
+  color: #ff3b3b;
+  font-size: 0.98rem;
+  margin: 0.2rem 0 0.1rem 0;
+  text-align: center;
+}
+
+.login-toggle-text {
+  font-size: 0.7rem;
+  color: var(--tech-badge-text);
+  margin-top: 0.5rem;
+  font-family: var(--font-noraml);
+  text-align: center;
+}
+
+.login-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  font-family: var(--font-noraml);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 0;
+  margin-left: 0.2rem;
+  transition: color 0.2s;
+}
+.login-toggle-btn:hover {
+  color: var(--accent-color-hover);
+}
+
+@media only screen and (max-width: 600px) {
+  .login-card {
+    padding: 1.5rem 0.5rem 1.5rem 0.5rem;
+    max-width: 90vw;
+  }
+  .login-title {
+    font-size: 1.5rem;
+  }
+  .login-input {
+    font-size: 0.95rem;
+    padding: 0.7rem 0.7rem;
+  }
+}
