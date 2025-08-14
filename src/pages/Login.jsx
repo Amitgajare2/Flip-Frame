@@ -34,7 +34,9 @@ export default function Login() {
           .from('profiles')
           .insert({ id: userId, name });
         if (profileError) {
-          console.error('Profile creation error:', profileError.message);
+          // Log error internally without exposing details to console
+          setErrorMsg('Account created but profile setup failed. Please contact support.');
+          return;
         }
       }
       navigate('/dashboard');
