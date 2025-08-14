@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from '../supabase';
 import { v4 as uuidv4 } from 'uuid';
 import "./dashboard.css"
@@ -12,25 +12,72 @@ export default function Dashboard({ session }) {
   const [websites, setWebsites] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const lastSubmissionTime = useRef(0);
 
-  const fetchProfile = async () => {
-    const { data } = await supabase.from('profiles').select('name').eq('id', session.user.id).single();
-    if (data) setName(data.name);
+  // Rate limiting: Allow only 1 submission per 2 seconds
+  const RATE_LIMIT_MS = 2000;
+
+  // HTML validation function to prevent XSS
+  const validateHtml = (htmlContent) => {
+    // Check for size limit (100KB)
+    if (htmlContent.length > 100000) {
+      throw new Error('HTML content too large. Maximum size is 100KB.');
+    }
+    
+    // Check for dangerous patterns
+    const dangerousPatterns = [
+      /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+      /javascript:/gi,
+      /vbscript:/gi,
+      /on\w+\s*=/gi,
+      /<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi,
+      /<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi,
+      /<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi,
+      /<form\b[^<]*(?:(?!<\/form>)<[^<]*)*<\/form>/gi,
+      /<input\b[^<]*(?:(?!<\/input>)<[^<]*)*<\/input>/gi,
+      /<textarea\b[^<]*(?:(?!<\/textarea>)<[^<]*)*<\/textarea>/gi,
+      /<select\b[^<]*(?:(?!<\/select>)<[^<]*)*<\/select>/gi,
+      /<button\b[^<]*(?:(?!<\/button>)<[^<]*)*<\/button>/gi,
+      /<meta\b[^<]*(?:(?!<\/meta>)<[^<]*)*<\/meta>/gi,
+      /<link\b[^<]*(?:(?!<\/link>)<[^<]*)*<\/link>/gi,
+      /<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi,
+      /<noscript\b[^<]*(?:(?!<\/noscript>)<[^<]*)*<\/noscript>/gi
+    ];
+    
+    for (const pattern of dangerousPatterns) {
+      if (pattern.test(htmlContent)) {
+        throw new Error('HTML contains forbidden elements or attributes for security reasons.');
+      }
+    }
+    
+    // Check for excessive external links (potential spam)
+    const externalLinks = (htmlContent.match(/https?:\/\//g) || []).length;
+    if (externalLinks > 10) {
+      throw new Error('Too many external links. Maximum allowed is 10.');
+    }
+    
+    return true;
   };
 
-  const fetchWebsites = async () => {
+  const fetchProfile = useCallback(async () => {
+    const { data } = await supabase.from('profiles').select('name').eq('id', session.user.id).single();
+    if (data) setName(data.name);
+  }, [session.user.id]);
+
+  const fetchWebsites = useCallback(async () => {
     const { data } = await supabase
       .from('websites')
       .select('*')
       .eq('user_id', session.user.id)
       .order('created_at', { ascending: false });
     if (data) setWebsites(data);
-  };
+  }, [session.user.id]);
 
   useEffect(() => {
     fetchProfile();
     fetchWebsites();
-  }, []);
+  }, [fetchProfile, fetchWebsites]);
 
   const logout = async () => {
     await supabase.auth.signOut();
@@ -38,41 +85,72 @@ export default function Dashboard({ session }) {
 
   const handleSubmit = async () => {
     setError('');
+    
+    // Rate limiting check
+    const now = Date.now();
+    if (now - lastSubmissionTime.current < RATE_LIMIT_MS) {
+      setError('Please wait a moment before submitting again.');
+      return;
+    }
+    
+    if (isSubmitting) {
+      setError('Please wait, submission in progress...');
+      return;
+    }
+    
+    // Validate HTML content
+    try {
+      validateHtml(html);
+    } catch (validationError) {
+      setError(validationError.message);
+      return;
+    }
+    
     if (!html.trim()) {
       setError('HTML code is empty.');
       return;
     }
-    if (editingId) {
-      const { error } = await supabase
-        .from('websites')
-        .update({ html })
-        .eq('id', editingId);
-      if (!error) {
-        setEditingId(null);
-        setHtml('');
-        fetchWebsites();
-      } else {
-        setError(error.message);
-      }
-    } else {
-      if (websites.length >= 3) {
-        setError('You can only host up to 3 websites.');
-        return;
-      }
-      const id = uuidv4().slice(0, 8);
-      const { error } = await supabase.from('websites').insert([
-        {
-          id,
-          user_id: session.user.id,
-          html
+    
+    setIsSubmitting(true);
+    lastSubmissionTime.current = now;
+    
+    try {
+      if (editingId) {
+        const { error } = await supabase
+          .from('websites')
+          .update({ html })
+          .eq('id', editingId);
+        if (!error) {
+          setEditingId(null);
+          setHtml('');
+          fetchWebsites();
+        } else {
+          setError(error.message);
         }
-      ]);
-      if (!error) {
-        setHtml('');
-        fetchWebsites();
       } else {
-        setError(error.message);
+        if (websites.length >= 3) {
+          setError('You can only host up to 3 websites.');
+          return;
+        }
+        const id = uuidv4().slice(0, 8);
+        const { error } = await supabase.from('websites').insert([
+          {
+            id,
+            user_id: session.user.id,
+            html
+          }
+        ]);
+        if (!error) {
+          setHtml('');
+          fetchWebsites();
+        } else {
+          setError(error.message);
+        }
       }
+    } catch {
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -104,8 +182,12 @@ export default function Dashboard({ session }) {
             onChange={(e) => setHtml(e.target.value)}
           />
           <div className="dashboard-form-actions">
-            <button className="dashboard-btn dashboard-action-btn" onClick={handleSubmit}>
-              {editingId ? 'Update Website' : 'Host Website'}
+            <button 
+              className="dashboard-btn dashboard-action-btn" 
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Processing...' : (editingId ? 'Update Website' : 'Host Website')}
             </button>
             {editingId && (
               <button className="dashboard-cancel-btn" onClick={() => {
