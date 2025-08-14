@@ -2,11 +2,11 @@ import React from 'react'
 import "./home.css"
 import { WrapButton } from '../components/Btn'
 import { useNavigate } from 'react-router-dom'
-import { motion } from "framer-motion";
+
 import { FaGithub, FaInstagram, FaTwitter, FaLinkedin, FaStar } from 'react-icons/fa';
 
 
-const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
+
 
 
 function Home() {
@@ -30,11 +30,7 @@ function Home() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -50 }}
-      transition={transition}>
+    <div>
       <div className="home-wrapper">
         <div className="grid-overlay" />
         <div className="hero-container">
@@ -49,12 +45,9 @@ function Home() {
             {/* Social Media Buttons */}
             <div className="social-buttons">
               <h3 className='btn-head'>Social Media</h3><br />
-              <motion.button 
+              <button 
                 className="social-btn github-btn"
                 onClick={handleGitHubClick}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <FaGithub />
                 <span>Star on GitHub</span>
@@ -62,46 +55,37 @@ function Home() {
                   <FaStar />
                   <span>3</span>
                 </div>
-              </motion.button>
+              </button>
 
-              <motion.button 
+              <button 
                 className="social-btn instagram-btn"
                 onClick={handleInstagramClick}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <FaInstagram />
                 {/* <span>Follow on Instagram</span> */}
-              </motion.button>
+              </button>
 
-              <motion.button 
+              <button 
                 className="social-btn twitter-btn"
                 onClick={handleTwitterClick}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <FaTwitter />
                 {/* <span>Follow on Twitter</span> */}
-              </motion.button>
+              </button>
 
-              <motion.button 
+              <button 
                 className="social-btn linkedin-btn"
                 onClick={handleLinkedInClick}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <FaLinkedin />
                 {/* <span>Connect on LinkedIn</span> */}
-              </motion.button>
+              </button>
             </div>
           </div>
         </div>
 
       </div>
-    </motion.div>
+    </div>
   )
 }
 
