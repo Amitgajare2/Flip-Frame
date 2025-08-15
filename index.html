@@ -4,21 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" 
-          content="default-src 'self'; 
-                   script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
-                   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
-                   font-src 'self' https://fonts.gstatic.com;
-                   img-src 'self' data: https:;
-                   connect-src 'self' https://*.supabase.co;
-                   frame-src 'self';
-                   object-src 'none';
-                   base-uri 'self';
+    <!-- Security Headers (relaxed to support iframe srcDoc content running inline/external scripts/styles) -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' blob: data:; 
+                   script-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob: data:; 
+                   style-src 'self' 'unsafe-inline' https: blob: data:; 
+                   font-src 'self' https: data:;
+                   img-src 'self' data: https: blob:; 
+                   connect-src 'self' https://*.supabase.co https: wss:; 
+                   frame-src 'self' https: blob: data:; 
+                   object-src 'none'; 
+                   base-uri 'self'; 
                    form-action 'self';">
-    
+
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
+    <!-- X-Frame-Options should be sent as a response header; meta here is removed to avoid confusion -->
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     
