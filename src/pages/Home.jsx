@@ -6,9 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import { FaGithub, FaInstagram, FaTwitter, FaLinkedin, FaStar } from 'react-icons/fa';
 
 
-
-
-
 function Home() {
 
   const navigate = useNavigate();
@@ -41,11 +38,11 @@ function Home() {
               Create, preview, and share live websites in seconds. Just paste your HTML code, and Flip Frame will generate a unique link you can send to anyone — no signup required to view, login required to host. Perfect for demos, experiments, or quick sharing!
             </p>
             <WrapButton className="hero-button" onClick={() => navigate('/login')} ></WrapButton>
-            
+
             {/* Social Media Buttons */}
             <div className="social-buttons">
               <h3 className='btn-head'>Social Media</h3><br />
-              <button 
+              <button
                 className="social-btn github-btn"
                 onClick={handleGitHubClick}
               >
@@ -57,7 +54,7 @@ function Home() {
                 </div>
               </button>
 
-              <button 
+              <button
                 className="social-btn instagram-btn"
                 onClick={handleInstagramClick}
               >
@@ -65,7 +62,7 @@ function Home() {
                 {/* <span>Follow on Instagram</span> */}
               </button>
 
-              <button 
+              <button
                 className="social-btn twitter-btn"
                 onClick={handleTwitterClick}
               >
@@ -73,7 +70,7 @@ function Home() {
                 {/* <span>Follow on Twitter</span> */}
               </button>
 
-              <button 
+              <button
                 className="social-btn linkedin-btn"
                 onClick={handleLinkedInClick}
               >
@@ -81,6 +78,24 @@ function Home() {
                 {/* <span>Connect on LinkedIn</span> */}
               </button>
             </div>
+
+            <div className="video-card">
+              {/* <video  autoPlay loop muted>
+                <source src="demo.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video> */}
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/DUV0KxkaIQU?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=DUV0KxkaIQU"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+              </iframe>
+            </div>
+
           </div>
         </div>
 
