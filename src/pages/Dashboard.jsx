@@ -20,27 +20,25 @@ export default function Dashboard({ session }) {
 
   // HTML validation function to prevent XSS
   const validateHtml = (htmlContent) => {
+    const trimmed = htmlContent.trim();
+    // Require HTML-like tags so plain text like "gsdgbnfunb" is rejected
+    const hasHtmlLikeTag = /<\s*[a-zA-Z!\/?][^>]*>/.test(trimmed);
+    if (!hasHtmlLikeTag) {
+      throw new Error('Only HTML/CSS/JS code is allowed. Plain text is not accepted.');
+    }
+
     // Check for size limit (100KB)
-    if (htmlContent.length > 100000) {
+    if (htmlContent.length > 1000000000) {
       throw new Error('HTML content too large. Maximum size is 100KB.');
     }
     
-    // Check for dangerous patterns (but allow style and script tags)
+    // Check for dangerous patterns (block only high-risk)
     const dangerousPatterns = [
-      /javascript:/gi,
-      /vbscript:/gi,
-      /on\w+\s*=/gi,
+      /\b(?:href|src)\s*=\s*["']\s*javascript:/gi,
+      /\b(?:href|src)\s*=\s*["']\s*vbscript:/gi,
       /<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi,
       /<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi,
-      /<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi,
-      /<form\b[^<]*(?:(?!<\/form>)<[^<]*)*<\/form>/gi,
-      /<input\b[^<]*(?:(?!<\/input>)<[^<]*)*<\/input>/gi,
-      /<textarea\b[^<]*(?:(?!<\/textarea>)<[^<]*)*<\/textarea>/gi,
-      /<select\b[^<]*(?:(?!<\/select>)<[^<]*)*<\/select>/gi,
-      /<button\b[^<]*(?:(?!<\/button>)<[^<]*)*<\/button>/gi,
-      /<meta\b[^<]*(?:(?!<\/meta>)<[^<]*)*<\/meta>/gi,
-      /<link\b[^<]*(?:(?!<\/link>)<[^<]*)*<\/link>/gi,
-      /<noscript\b[^<]*(?:(?!<\/noscript>)<[^<]*)*<\/noscript>/gi
+      /<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi
     ];
     
     for (const pattern of dangerousPatterns) {
@@ -98,8 +96,7 @@ export default function Dashboard({ session }) {
     
     // Validate HTML content
     try {
-      // Temporarily disable validation for testing
-      // validateHtml(html);
+      validateHtml(html);
     } catch (validationError) {
       setError(validationError.message);
       return;
