@@ -2,6 +2,7 @@ import React from 'react'
 import "./home.css"
 import { WrapButton } from '../components/Btn'
 import { useNavigate } from 'react-router-dom'
+import Footer from '../components/Footer'
 
 import { FaGithub, FaInstagram, FaTwitter, FaLinkedin, FaStar } from 'react-icons/fa';
 
@@ -95,9 +96,9 @@ function Home() {
                 allowfullscreen>
               </iframe>
             </div>
-
           </div>
         </div>
+            <Footer />
 
       </div>
     </div>
