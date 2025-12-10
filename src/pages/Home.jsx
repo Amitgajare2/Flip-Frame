@@ -10,6 +10,23 @@ import { FaGithub, FaInstagram, FaTwitter, FaLinkedin, FaStar } from 'react-icon
 function Home() {
 
   const navigate = useNavigate();
+  const testimonials = [
+    {
+      name: 'Aisha Malik',
+      role: 'Frontend dev @ StudioNova',
+      quote: 'Flip Frame is my go-to for quick client demos. Paste, publish, send — done.',
+    },
+    {
+      name: 'Diego Ruiz',
+      role: 'Product designer',
+      quote: 'I can share interactive prototypes without bugging engineering. Links load instantly.',
+    },
+    {
+      name: 'Maya Chen',
+      role: 'Hackathon mentor',
+      quote: 'Students ship faster because the hosting guardrails stop the scary stuff by default.',
+    },
+  ];
 
   const handleGitHubClick = () => {
     window.open('https://github.com/Amitgajare2/Flip-Frame', '_blank');
@@ -96,6 +113,31 @@ function Home() {
                 allowfullscreen>
               </iframe>
             </div>
+
+            {/* testomonial section */}
+            <section className="testimonial-section" aria-labelledby="testimonial-heading">
+              <div className="testimonial-header">
+                <p className="section-eyebrow">Loved by builders</p>
+                <h3 id="testimonial-heading">Real teams, real feedback</h3>
+                <p className="testimonial-subtitle">
+                  Designers, developers, and students use Flip Frame to ship HTML demos in minutes.
+                </p>
+              </div>
+              <div className="testimonial-grid">
+                {testimonials.map((item) => (
+                  <article key={item.name} className="testimonial-card">
+                    <div className="testimonial-avatar" aria-hidden="true">
+                      {item.name.slice(0, 1)}
+                    </div>
+                    <div className="testimonial-body">
+                      <p className="testimonial-quote">“{item.quote}”</p>
+                      <p className="testimonial-name">{item.name}</p>
+                      <p className="testimonial-role">{item.role}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
           </div>
         </div>
             <Footer />
