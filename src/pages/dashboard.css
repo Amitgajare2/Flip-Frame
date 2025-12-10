@@ -204,7 +204,7 @@
 }
 
 .dashboard-section-title {
-  font-family: var(--font-title);
+  font-family: var(--font-noraml);
   color: black;
   font-size: 1rem;
   letter-spacing: 0.3px;
@@ -246,7 +246,7 @@
 }
 
 .dashboard-action-btn {
-  min-width: 140px;
+  min-width: 70px;
 }
 
 .dashboard-cancel-btn {
