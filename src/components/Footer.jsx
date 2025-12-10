@@ -13,8 +13,8 @@ export default function Footer() {
         <nav className="footer-links" aria-label="Footer navigation">
           <a href="/#features">Features</a>
           <a href="/#pricing">Pricing</a>
-          <a href="/#docs" target="_blank" rel="noreferrer">Docs</a>
-          <a href="mailto:support@flipframe.app">Contact</a>
+          <a href="/docs" rel="noreferrer">Docs</a>
+          <a href="mailto:syntaxamit@proton.me">Contact</a>
         </nav>
         <div className="footer-social">
           <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub"><FaGithub /></a>
@@ -27,9 +27,4 @@ export default function Footer() {
     </footer>
   );
 }
-
-
-
-
-
 
