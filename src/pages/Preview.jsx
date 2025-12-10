@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import { supabase } from '../supabase';
+import NotFound from './NotFound';
 
 export default function Preview() {
   const { id } = useParams();
@@ -41,7 +42,16 @@ export default function Preview() {
     };
   }, [html]);
 
-  if (error) return <h2>{error}</h2>;
+  if (error) {
+    return (
+      <NotFound
+        title="Site not found"
+        message={`We couldn't find a site with id "${id}". Check the link or publish a new snippet.`}
+        ctaLabel="Go to Home"
+        ctaHref="/"
+      />
+    );
+  }
   if (!html) return <h2>Loading...</h2>;
 
   return (
