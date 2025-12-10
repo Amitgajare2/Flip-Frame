@@ -6,6 +6,8 @@ import Footer from "../components/Footer";
 // import { WrapButton } from '../components/Btn';
 import { CiLink } from "react-icons/ci";
 import { MdDateRange, MdOpenInNew, MdContentCopy, MdEdit, MdDelete } from "react-icons/md";
+import { Link } from 'react-router-dom';
+
 
 export default function Dashboard({ session }) {
   const [name, setName] = useState('');
@@ -252,7 +254,7 @@ export default function Dashboard({ session }) {
       <div className="dashboard-container">
         <nav className="navbar">
           <div className="navbar-left">
-            <span className="navbar-logo">FlipFrame</span>
+            <span className="navbar-logo"><Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>FlipFrame</Link></span>
             <span className="navbar-sep" aria-hidden="true" />
             {/* <span className="navbar-title">Dashboard</span> */}
           </div>
