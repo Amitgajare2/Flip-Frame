@@ -7,6 +7,7 @@ import Preview from './pages/Preview';
 import Home from './pages/Home';
 import Docs from './pages/Docs';
 import Features from './pages/Features';
+import NotFound from './pages/NotFound';
 
 function App() {
   const [session, setSession] = useState(null);
@@ -25,6 +26,7 @@ function App() {
         <Route path="/login" element={session ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/dashboard" element={session ? <Dashboard session={session} /> : <Navigate to="/login" />} />
         <Route path="/:id" element={<Preview />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
