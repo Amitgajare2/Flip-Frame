@@ -92,7 +92,7 @@
     }
 
     .hero-container {
-        height: 90vh;
+        height: auto;
         padding: 20px;
         /* border: 1px solid red; */
     }
@@ -246,6 +246,97 @@
     object-fit: cover;
 }
 
+.testimonial-section {
+    margin-top: 70px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.testimonial-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.testimonial-header h3 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--text-color-light);
+}
+
+.section-eyebrow {
+    font-family: var(--font-title);
+    color: var(--accent-color);
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.testimonial-subtitle {
+    font-family: var(--font-noraml);
+    color: var(--tech-badge-text);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.testimonial-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f1f1f1;
+    padding: 1rem;
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+}
+
+.testimonial-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffe7e3;
+    color: var(--accent-color);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-headline);
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.testimonial-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.testimonial-quote {
+    font-family: var(--font-noraml);
+    color: var(--text-color-light);
+    line-height: 1.5;
+    font-size: 0.98rem;
+}
+
+.testimonial-name {
+    font-family: var(--font-headline);
+    color: var(--text-color-light);
+    font-size: 1rem;
+}
+
+.testimonial-role {
+    font-family: var(--font-noraml);
+    color: var(--tech-badge-text);
+    font-size: 0.9rem;
+}
+
 /* Responsive Design for Social Buttons */
 @media only screen and (max-width: 768px) {
     .social-buttons {
@@ -272,6 +363,26 @@
         margin-top: 40px;
         border: 1px solid rgba(70, 70, 70, 0.1);
         width: 100%;
+    }
+    .testimonial-header {
+        text-align: left;
+        align-items: flex-start;
+    }
+    .testimonial-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 0.9rem;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 0.5rem;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .testimonial-grid::-webkit-scrollbar {
+        display: none;
+    }
+    .testimonial-card {
+        min-width: 82%;
+        scroll-snap-align: start;
     }
 }
 
