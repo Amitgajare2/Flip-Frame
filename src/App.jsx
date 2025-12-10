@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Preview from './pages/Preview';
 import Home from './pages/Home';
 import Docs from './pages/Docs';
+import Features from './pages/Features';
 
 function App() {
   const [session, setSession] = useState(null);
@@ -19,6 +20,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home></Home>}></Route>
+        <Route path='/features' element={<Features />} />
         <Route path='/docs' element={<Docs />} />
         <Route path="/login" element={session ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/dashboard" element={session ? <Dashboard session={session} /> : <Navigate to="/login" />} />
@@ -29,3 +31,4 @@ function App() {
 }
 
 export default App;
+
