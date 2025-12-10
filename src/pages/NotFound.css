@@ -1,0 +1,72 @@
+.notfound-page {
+  min-height: 100vh;
+  width: 100vw;
+  background: var(--bg-color-light);
+  position: relative;
+  overflow: hidden;
+  color: var(--text-color-light);
+}
+
+.notfound-content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 120px 18px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+}
+
+.notfound-eyebrow {
+  font-family: var(--font-title);
+  color: var(--accent-color);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+}
+
+.notfound-content h1 {
+  font-family: var(--font-headline);
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  color: var(--text-color-light);
+  line-height: 1.2;
+}
+
+.notfound-text {
+  max-width: 640px;
+  color: var(--tech-badge-text);
+  font-family: var(--font-noraml);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.notfound-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.notfound-btn {
+  min-width: 160px;
+}
+
+@media only screen and (max-width: 640px) {
+  .notfound-content {
+    padding: 90px 14px 50px;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .notfound-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .notfound-actions > * {
+    width: 100%;
+  }
+}
+
