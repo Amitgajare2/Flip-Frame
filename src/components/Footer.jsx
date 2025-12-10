@@ -11,8 +11,8 @@ export default function Footer() {
           <p className="footer-tagline">Lightweight hosting for HTML snippets.</p>
         </div>
         <nav className="footer-links" aria-label="Footer navigation">
-          <a href="/#features">Features</a>
-          <a href="/#pricing">Pricing</a>
+          <a href="/features">Features</a>
+          {/* <a href="/#pricing">Pricing</a> */}
           <a href="/docs" rel="noreferrer">Docs</a>
           <a href="mailto:syntaxamit@proton.me">Contact</a>
         </nav>
