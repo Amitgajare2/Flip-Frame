@@ -35,8 +35,8 @@ export default function Dashboard({ session }) {
     }
 
     // Check for size limit (100KB)
-    if (htmlContent.length > 100 * 1024) {
-      throw new Error('HTML content too large. Maximum size is 100KB.');
+    if (htmlContent.length > 500 * 1024) {
+      throw new Error('HTML content too large. Maximum size is 500KB.');
     }
     
     // Check for dangerous patterns (block only high-risk)
@@ -299,7 +299,7 @@ export default function Dashboard({ session }) {
                 onClick={handleSubmit}
                 disabled={isSubmitting}
               >
-                {isSubmitting ? 'Processing...' : (editingId ? 'Update Website' : 'Host Website')}
+                {isSubmitting ? 'Processing...' : (editingId ? 'Update Website' : 'Publish')}
               </button>
               {editingId && (
                 <button className="dashboard-cancel-btn" onClick={() => {
