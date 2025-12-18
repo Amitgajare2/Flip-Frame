@@ -1,5 +1,6 @@
 import { FaGithub, FaTwitter } from 'react-icons/fa';
 import './Footer.css';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -7,7 +8,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-brand">
-          <span className="footer-logo">FlipFrame</span>
+          <span className="footer-logo"><Link to="/" className="footer-logo">FlipFrame</Link></span>
           <p className="footer-tagline">Lightweight hosting for HTML snippets.</p>
         </div>
         <nav className="footer-links" aria-label="Footer navigation">
@@ -27,4 +28,5 @@ export default function Footer() {
     </footer>
   );
 }
+
 
