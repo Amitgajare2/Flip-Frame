@@ -3,6 +3,7 @@ import { supabase } from '../supabase';
 import { useNavigate } from 'react-router-dom';
 import "./login.css" 
 import { WrapButton } from '../components/Btn';
+import Footer from '../components/Footer';
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
@@ -44,6 +45,7 @@ export default function Login() {
   };
 
   return (
+  <>
     <div className="login-bg">
       <div className="grid-overlay" />
       <div className="login-card">
@@ -83,5 +85,8 @@ export default function Login() {
         </p>
       </div>
     </div>
+    <Footer/>
+  </>
   );
 }
+
